@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>DBP</title>
+    <style>
+      body {
+        margin-bottom: 30px;
+      }
+
+      #complete-all {
+        position: fixed;
+        bottom: 635px;
+        left: 10px;
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#new-task').onsubmit = () => {
+          const cb = document.createElement("INPUT");
+          cb.setAttribute("type", "checkbox");
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "x";
+          deleteBtn.onclick = function() {
+            // Remove the parent <li> when the delete button is clicked
+            this.parentNode.remove();
+          };
+
+          const li = document.createElement('li');
+          li.appendChild(cb);
+          li.innerHTML += document.querySelector('#task').value;
+          li.appendChild(deleteBtn);
+
+          document.querySelector('#tasks').append(li);
+          document.querySelector('#task').value = '';
+
+          return false;
+        };
+
+        document.querySelector('#complete-all').onclick = () => {
+          const checkboxes = document.querySelectorAll('#tasks li input[type="checkbox"]');
+          checkboxes.forEach((checkbox) => {
+            checkbox.checked = true;
+          });
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <p>Computer Science</p>
+    <h1>Tasks</h1>
+    <form id="new-task">
+      <input
+        id="task"
+        autocomplete="off"
+        autofocus
+        placeholder="New Task"
+        type="text"
+      >
+      <input type="submit">
+    </form>
+
+    <button id="complete-all">Complete All</button>
+
+    <ol id="tasks">
+    </ol>
+  </body>
+</html>
